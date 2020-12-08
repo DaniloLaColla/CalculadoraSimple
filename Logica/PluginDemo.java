@@ -15,7 +15,7 @@ public class PluginDemo {
 	public static void main (String args[]) {
 		PluginDemo demo = new PluginDemo(args);
 		demo.getPlugins();
-		demo.runPlugins();
+		
 	}
 
 	PluginDemo (String args[]) {
@@ -58,29 +58,5 @@ public class PluginDemo {
 		}
 	}
 
-	protected void runPlugins() {
-		int count = 1;
-		Iterator iter = plugins.iterator();
-		while (iter.hasNext()) {
-			PluginFunction pf = (PluginFunction) iter.next();
-			try {
-				pf.setParameter(count);
-				System.out.print(pf.getPluginName());
-				System.out.print(" ( "+count+" ) = ");
-				if (pf.hasError()) {
-					System.out.println("there was an error during plugin initialization");
-					continue;
-				}
-				int result = pf.getResult();
-				if (pf.hasError())
-					System.out.println("there was an error during plugin execution");
-				else
-					System.out.println(result);
-				count++;
-			} catch (SecurityException secEx) {
-				System.err.println("plugin '"+pf.getClass().getName()+"' tried to do something illegal");
-			}
-		}
-	}
 }
 

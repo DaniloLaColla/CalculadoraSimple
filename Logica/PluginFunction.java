@@ -3,10 +3,10 @@ package Logica;
 public interface PluginFunction {
 
 	// let the application pass in a parameter
-	public void setParameter (int param);
+	public void setParameter (int p1, int p2);
 
 	// retrieve a result from the plugin
-	public int getResult();
+	public float getResult();
 
 	// return the name of this plugin
 	public String getPluginName();

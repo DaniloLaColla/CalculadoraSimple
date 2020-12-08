@@ -2,22 +2,25 @@ package Logica;
 
 public class Suma implements PluginFunction{
 
+	private int operando1, operando2;
+	
 	@Override
-	public void setParameter(int param) {
-		// TODO Auto-generated method stub
+	public void setParameter(int p1, int p2) {
+		operando1 = p1;
+		operando2 = p2;
 		
 	}
 
 	@Override
-	public int getResult() {
-		// TODO Auto-generated method stub
-		return 0;
+	public float getResult() {
+		
+		return operando1 + operando2;
 	}
 
 	@Override
 	public String getPluginName() {
 		// TODO Auto-generated method stub
-		return null;
+		return "Suma";
 	}
 
 	@Override
