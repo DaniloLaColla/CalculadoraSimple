@@ -15,6 +15,7 @@ public class GUI extends JFrame {
 	protected JTextField campo1, campo2;
 	protected JButton operar, actualizar;
 	protected JPopupMenu menuDesplegable;
+	private JTextField resultado;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -41,20 +42,26 @@ public class GUI extends JFrame {
 
 	private void inicializarGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(500, 100, 500, 600);
+		setBounds(500, 100, 200, 300);
 	}
 
 	private void inicializarPaneles() {
 		
 		panelPrincipal = new JPanel();
-		panelPrincipal.setLayout(new GridLayout(5,1));
+		panelPrincipal.setLayout(new GridLayout(6,1));
 		setContentPane(panelPrincipal);
 	}
 
 	private void inicializarCamposDeTexto() {
 		
 		campo1 = new JTextField();
+		campo1.setText("Operando 1");
+		
 		campo2 = new JTextField();
+		campo2.setText("Operando 2");
+		
+		resultado = new JTextField();
+		resultado.setEditable(false);
 	}
 	
 
@@ -76,8 +83,9 @@ public class GUI extends JFrame {
 		
 		panelPrincipal.add(campo1);
 		panelPrincipal.add(menuDesplegable);
-		panelPrincipal.add(operar);
 		panelPrincipal.add(campo2);
+		panelPrincipal.add(operar);
+		panelPrincipal.add(resultado);
 		panelPrincipal.add(actualizar);
 	}
 	
