@@ -1,4 +1,4 @@
-package Logica;
+package CalculadoraSimple;
 
 import java.io.DataInputStream;
 import java.io.File;

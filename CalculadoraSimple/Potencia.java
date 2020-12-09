@@ -1,9 +1,9 @@
-package Logica;
+package CalculadoraSimple;
 
-public class Division implements PluginFunction {
-
-	private int operando1, operando2;
+public class Potencia implements PluginFunction{
 	
+	private int operando1, operando2;
+
 	@Override
 	public void setParameter(int p1, int p2) {
 		
@@ -14,13 +14,13 @@ public class Division implements PluginFunction {
 	@Override
 	public float getResult() {
 		// TODO Auto-generated method stub
-		return operando1 / operando2;
+		return (int) Math.pow(operando1, operando2);
 	}
 
 	@Override
 	public String getPluginName() {
 		// TODO Auto-generated method stub
-		return "Division";
+		return "Potencia";
 	}
 
 	@Override

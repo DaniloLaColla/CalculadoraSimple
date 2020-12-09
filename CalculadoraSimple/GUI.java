@@ -1,4 +1,4 @@
-package GUI;
+package CalculadoraSimple;
 
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
@@ -14,9 +14,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
-
-import Logica.PluginDemo;
-import Logica.PluginFunction;
 
 import java.awt.BorderLayout;
 
@@ -59,7 +56,7 @@ public class GUI extends JFrame {
 	private void inicializarPluginDemo() {
 		
 		pd = new PluginDemo();
-		pd.getPlugins();
+		buscarPlugs();
 		
 	}
 
@@ -77,19 +74,19 @@ public class GUI extends JFrame {
 		
 		panel1 = new JPanel();
 		panel1.setLayout(new GridLayout(4, 1));
-		//setContentPane(panel1);
+		
 		
 		panel2 = new JPanel();
 		panel2.setLayout(new FlowLayout());
-		//setContentPane(panel2);
+		
 		
 		panel3 = new JPanel();
 		panel3.setLayout(new FlowLayout());
-		//setContentPane(panel3);
+	
 		
 		panel4 = new JPanel();
 		panel4.setLayout(new FlowLayout());
-		//setContentPane(panel4);
+		
 		
 		panelPrincipal.add(panel1);
 		panelPrincipal.add(panel2);
@@ -129,8 +126,10 @@ public class GUI extends JFrame {
 		actualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
-				
-			
+				buscarPlugs();
+				menuDesplegable.removeAllItems();
+				agregarElementos(menuDesplegable);
+				repaint();
 			}});
 		
 	}	
@@ -139,13 +138,13 @@ public class GUI extends JFrame {
 		
 		menuDesplegable = new JComboBox();
 		
-		for (PluginFunction c : pd.getLista()) {
-			menuDesplegable.addItem(c.getPluginName());
-		}
+		agregarElementos(menuDesplegable);
+		
 		
 	}
 	
 	
+
 	private void agregarComponentesAlPanel() {
 		
 		panel1.add(operando1);
@@ -160,13 +159,13 @@ public class GUI extends JFrame {
 		int toReturn;
 		try {
 	        toReturn = Integer.parseInt(o.getText());
+	        System.out.println(""+toReturn);
 	    } catch (NumberFormatException nfe) {
 	        o.setText("");
 	        JOptionPane.showMessageDialog(null,"Ingresa solo numeros enteros","Error",JOptionPane.ERROR_MESSAGE);
 	        return 0;
 	    }
 
-		System.out.println(""+toReturn);
 		return toReturn; 
 	}
 	
@@ -178,4 +177,17 @@ public class GUI extends JFrame {
 		
 	}
 	
+
+	private void buscarPlugs() {
+		pd.getPlugins();
+	}
+
+
+	private void agregarElementos(JComboBox menuDesplegable) {
+		
+		for (PluginFunction c : pd.getLista()) { 
+			System.out.println(c.getPluginName());
+			menuDesplegable.addItem(c.getPluginName());
+		}
+	}
 }

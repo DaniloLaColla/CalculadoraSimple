@@ -1,11 +1,12 @@
-package Logica;
+package CalculadoraSimple;
 
-public class Suma implements PluginFunction{
-
-	private int operando1, operando2;
+public class Resta implements PluginFunction{
 	
+	private int operando1, operando2;
+
 	@Override
 	public void setParameter(int p1, int p2) {
+		
 		operando1 = p1;
 		operando2 = p2;
 		
@@ -13,14 +14,14 @@ public class Suma implements PluginFunction{
 
 	@Override
 	public float getResult() {
-		
-		return operando1 + operando2;
+		// TODO Auto-generated method stub
+		return operando1 - operando2;
 	}
 
 	@Override
 	public String getPluginName() {
 		// TODO Auto-generated method stub
-		return "Suma";
+		return "Resta" ;
 	}
 
 	@Override

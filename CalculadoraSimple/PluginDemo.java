@@ -1,4 +1,4 @@
-package Logica;
+package CalculadoraSimple;
 
 
 import java.io.File;
@@ -22,7 +22,7 @@ public class PluginDemo {
 		if (args.length > 0)
 			pluginsDir = args[0];
 		else
-			pluginsDir = "plugins";
+			pluginsDir = "plugs";
 
 		plugins = new ArrayList();
 
@@ -41,6 +41,7 @@ public class PluginDemo {
 	public void getPlugins() {
 		File dir = new File(System.getProperty("user.dir") + File.separator + pluginsDir);
 		ClassLoader cl = new PluginClassLoader(dir);
+		System.out.println(dir);
 		if (dir.exists() && dir.isDirectory()) {
 			// we'll only load classes directly in this directory -
 			// no subdirectories, and no classes in packages are recognized
@@ -57,6 +58,7 @@ public class PluginDemo {
 						if (intf[j].getName().equals("PluginFunction")) {
 							// the following line assumes that PluginFunction has a no-argument constructor
 							PluginFunction pf = (PluginFunction) c.newInstance();
+							System.out.println(pf.getPluginName());
 							plugins.add(pf);
 							continue;
 						}

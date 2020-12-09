@@ -1,4 +1,4 @@
-package Logica;
+package CalculadoraSimple;
 
 public interface PluginFunction {
 
