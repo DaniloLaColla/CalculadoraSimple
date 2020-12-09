@@ -10,7 +10,7 @@ public class PluginDemo {
 	String pluginsDir;
 
 	// a list where we keep an initialized object of each plugin class
-	List plugins;
+	List<PluginFunction> plugins;
 
 	public static void main (String args[]) {
 		PluginDemo demo = new PluginDemo(args);
@@ -18,7 +18,7 @@ public class PluginDemo {
 		
 	}
 
-	PluginDemo (String args[]) {
+	public PluginDemo (String args[]) {
 		if (args.length > 0)
 			pluginsDir = args[0];
 		else
@@ -27,8 +27,18 @@ public class PluginDemo {
 		plugins = new ArrayList();
 
 	}
+	
+	public PluginDemo () {
+		
+		plugins = new ArrayList();
 
-	protected void getPlugins() {
+	}
+	
+	public List<PluginFunction> getLista() {
+		return plugins;
+	}
+
+	public void getPlugins() {
 		File dir = new File(System.getProperty("user.dir") + File.separator + pluginsDir);
 		ClassLoader cl = new PluginClassLoader(dir);
 		if (dir.exists() && dir.isDirectory()) {

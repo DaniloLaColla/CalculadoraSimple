@@ -1,21 +1,34 @@
 package GUI;
 
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
+import Logica.PluginDemo;
+import Logica.PluginFunction;
+
+import java.awt.BorderLayout;
+
 public class GUI extends JFrame {
 	
-	protected JPanel panelPrincipal;
-	protected JTextField campo1, campo2;
+	protected JPanel panelPrincipal, panel1, panel2, panel3, panel4;
+	protected JTextField operando1, operando2;
 	protected JButton operar, actualizar;
-	protected JPopupMenu menuDesplegable;
-	private JTextField resultado;
+	protected JComboBox menuDesplegable;
+	protected JTextField resultado;
+	protected PluginDemo pd;
+	
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -32,61 +45,137 @@ public class GUI extends JFrame {
 	
 	public GUI() {
 		
+		inicializarPluginDemo();
 		inicializarGUI();
 		inicializarPaneles();
+		inicializarMenuDesplegable();
 		inicializarCamposDeTexto();
 		inicializarBotones();
-		inicializarMenuDesplegable();
 		agregarComponentesAlPanel();
+		
+	}
+
+
+	private void inicializarPluginDemo() {
+		
+		pd = new PluginDemo();
+		pd.getPlugins();
+		
 	}
 
 	private void inicializarGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(500, 100, 200, 300);
+		setBounds(500, 100, 400, 400);
 	}
 
 	private void inicializarPaneles() {
 		
 		panelPrincipal = new JPanel();
-		panelPrincipal.setLayout(new GridLayout(6,1));
+		panelPrincipal.setLayout(new GridLayout(5,1));
 		setContentPane(panelPrincipal);
+		
+		
+		panel1 = new JPanel();
+		panel1.setLayout(new GridLayout(4, 1));
+		//setContentPane(panel1);
+		
+		panel2 = new JPanel();
+		panel2.setLayout(new FlowLayout());
+		//setContentPane(panel2);
+		
+		panel3 = new JPanel();
+		panel3.setLayout(new FlowLayout());
+		//setContentPane(panel3);
+		
+		panel4 = new JPanel();
+		panel4.setLayout(new FlowLayout());
+		//setContentPane(panel4);
+		
+		panelPrincipal.add(panel1);
+		panelPrincipal.add(panel2);
+		panelPrincipal.add(panel3);
+		panelPrincipal.add(panel4);
 	}
 
 	private void inicializarCamposDeTexto() {
 		
-		campo1 = new JTextField();
-		campo1.setText("Operando 1");
+		operando1 = new JTextField ();
+		operando1.setText("Operando 1");
 		
-		campo2 = new JTextField();
-		campo2.setText("Operando 2");
+		operando2 = new JTextField ();
+		operando2.setText("Operando 2");
 		
 		resultado = new JTextField();
+		resultado.setText("resultado");
 		resultado.setEditable(false);
 	}
 	
-
 	private void inicializarBotones() {
 		
 		operar = new JButton("operar");
+		operar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int indiceDesplegable = menuDesplegable.getSelectedIndex();
+				
+				PluginFunction funcion = pd.getLista().get(indiceDesplegable);
+				
+				operar(funcion, obtenerOperando(operando1), obtenerOperando(operando2));
+				
+			}});
+		
+		
 		actualizar = new JButton("actualizar");
+		actualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+				
+			
+			}});
 		
 	}	
 	
-	
 	private void inicializarMenuDesplegable() {
 		
-		menuDesplegable = new JPopupMenu();
+		menuDesplegable = new JComboBox();
+		
+		for (PluginFunction c : pd.getLista()) {
+			menuDesplegable.addItem(c.getPluginName());
+		}
+		
 	}
 	
 	
 	private void agregarComponentesAlPanel() {
 		
-		panelPrincipal.add(campo1);
-		panelPrincipal.add(menuDesplegable);
-		panelPrincipal.add(campo2);
-		panelPrincipal.add(operar);
-		panelPrincipal.add(resultado);
-		panelPrincipal.add(actualizar);
+		panel1.add(operando1);
+		panel1.add(operando2);
+		panel2.add(menuDesplegable);
+		panel2.add(operar);
+		panel3.add(resultado);
+		panel4.add(actualizar);
+	}
+	
+	private int obtenerOperando(JTextField o) {
+		int toReturn;
+		try {
+	        toReturn = Integer.parseInt(o.getText());
+	    } catch (NumberFormatException nfe) {
+	        o.setText("");
+	        JOptionPane.showMessageDialog(null,"Ingresa solo numeros enteros","Error",JOptionPane.ERROR_MESSAGE);
+	        return 0;
+	    }
+
+		System.out.println(""+toReturn);
+		return toReturn; 
+	}
+	
+	private void operar(PluginFunction funcion, int o1, int o2) {
+		
+		funcion.setParameter(o1, o2);
+		String cadena = Float.toString(funcion.getResult());
+		resultado.setText(cadena);
+		
 	}
 	
 }
